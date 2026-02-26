@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nader Birthday</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+background: linear-gradient(135deg,#f5efe6,#e8d8c3,#b08968);
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+text-align:center;
+color:#5a4636;
+}
+
+.screen{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+transition:1s;
+padding:20px;
+}
+
+.hidden{opacity:0; pointer-events:none;}
+
+h1{
+font-family:'Cinzel',serif;
+font-size:42px;
+letter-spacing:3px;
+}
+
+.count{
+font-size:100px;
+font-weight:bold;
+animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.15);}
+100%{transform:scale(1);}
+}
+
+.time{
+font-size:60px;
+}
+
+.date{
+font-size:18px;
+letter-spacing:6px;
+margin-top:10px;
+}
+
+button{
+margin-top:30px;
+padding:12px 25px;
+border:none;
+border-radius:30px;
+background:#b08968;
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#7f5539;
+}
+
+.fadeIn{
+animation:fade 2s forwards;
+}
+
+@keyframes fade{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+.confetti{
+position:absolute;
+width:8px;
+height:8px;
+animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-100vh) rotate(0);}
+100%{transform:translateY(100vh) rotate(360deg);}
+}
+</style>
+</head>
+<body>
+
+<!-- Intro -->
+<div class="screen" id="intro">
+<p>Tonight… something special begins ✨</p>
+</div>
+
+<!-- Countdown -->
+<div class="screen hidden" id="countdown">
+<div class="count" id="counter">3</div>
+</div>
+
+<!-- Midnight -->
+<div class="screen hidden" id="midnight">
+<div class="time">00:00</div>
+<div class="date">27 • 02 • 2026</div>
+</div>
+
+<!-- Celebration -->
+<div class="screen hidden" id="celebrate">
+<h1>🎉 Happy Birthday Nader 🎉</h1>
+<p>اليوم يبدأ فصل جديد في حياتك…<br>و أنا فخورة إني جزء من قصتك 🤍</p>
+<button onclick="stageMessage()">Continue ✨</button>
+</div>
+
+<!-- Message -->
+<div class="screen hidden" id="message">
+<h1>🤍 رسالة من قلبي</h1>
+<p>
+يمكن أنا لست بجانبك اليوم لأحتفل معك…<br><br>
+لكن روحي قريبة منك أكثر مما تتخيل.<br><br>
+عند منتصف الليل تمنيتلك السعادة قبل أي حد ✨
+</p>
+<button onclick="stageMirror()">Next 🤍</button>
+</div>
+
+<!-- Mirror Stage -->
+<div class="screen hidden" id="mirror">
+<h1>🪞</h1>
+<p>
+لو تشوف نفسك بعيني…<br><br>
+تعرف قدّاش أنت شخص مميّز.<br><br>
+يمكن تشوف روحك عادي…<br>
+أما أنا نشوف فيك إنسان نادر فعلًا ✨
+</p>
+<button onclick="stageFuture()">Continue 🚀</button>
+</div>
+
+<!-- Future Message -->
+<div class="screen hidden" id="future">
+<h1>🚀 27 • 02 • 2027</h1>
+<p>
+مرحبًا نادر،<br><br>
+سنة كاملة عديتها…<br>
+و مازلت نفس الشخص اللي نفخر بيه.<br><br>
+كبرت سنة…<br>
+لكن قلبك بقى بنفس النقاء 🤍<br><br>
+المستقبل مطمئن…<br>
+لأنك فيه.
+</p>
+<button onclick="stageEnd()">Final ✨</button>
+</div>
+
+<!-- Final -->
+<div class="screen hidden" id="end">
+<p>
+وأخيرًا…<br><br>
+شكرًا لأنك في حياتي.<br><br>
+عيد ميلاد سعيد يا نادر 🎂
+</p>
+</div>
+
+<script>
+setTimeout(()=>{
+document.getElementById("intro").classList.add("hidden");
+document.getElementById("countdown").classList.remove("hidden");
+},2000);
+
+let counter=3;
+let interval=setInterval(()=>{
+counter--;
+if(counter>0){
+document.getElementById("counter").innerText=counter;
+}else{
+clearInterval(interval);
+document.getElementById("countdown").classList.add("hidden");
+document.getElementById("midnight").classList.remove("hidden");
+
+setTimeout(()=>{
+document.getElementById("midnight").classList.add("hidden");
+document.getElementById("celebrate").classList.remove("hidden");
+createConfetti();
+},2000);
+}
+},1000);
+
+function stageMessage(){
+document.getElementById("celebrate").classList.add("hidden");
+document.getElementById("message").classList.remove("hidden");
+}
+
+function stageMirror(){
+document.getElementById("message").classList.add("hidden");
+document.getElementById("mirror").classList.remove("hidden");
+}
+
+function stageFuture(){
+document.getElementById("mirror").classList.add("hidden");
+document.getElementById("future").classList.remove("hidden");
+}
+
+function stageEnd(){
+document.getElementById("future").classList.add("hidden");
+document.getElementById("end").classList.remove("hidden");
+}
+
+function createConfetti(){
+for(let i=0;i<70;i++){
+let conf=document.createElement("div");
+conf.classList.add("confetti");
+conf.style.left=Math.random()*100+"vw";
+conf.style.backgroundColor=["#b08968","#e8d8c3","#7f5539"][Math.floor(Math.random()*3)];
+conf.style.animationDuration=(3+Math.random()*4)+"s";
+document.body.appendChild(conf);
+}
+}
+</script>
+
+</body>
+</html>
